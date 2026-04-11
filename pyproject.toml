@@ -9,11 +9,18 @@ description = "Local inference queue manager and scheduler."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+  "aiosqlite>=0.21.0,<1.0.0",
+  "alembic>=1.16.0,<2.0.0",
   "fastapi>=0.116.0,<1.0.0",
+  "greenlet>=3.2.0,<4.0.0",
   "pydantic>=2.11.0,<3.0.0",
   "pyyaml>=6.0.2,<7.0.0",
+  "sqlalchemy>=2.0.41,<3.0.0",
   "uvicorn>=0.35.0,<1.0.0",
 ]
+
+[project.scripts]
+steward-db = "steward.db.cli:main"
 
 [project.optional-dependencies]
 dev = [

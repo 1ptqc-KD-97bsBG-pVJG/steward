@@ -45,6 +45,18 @@ Environment overrides use `STEWARD_` keys with `__` separators for nesting. Exam
 STEWARD_SERVER__PORT=9000 uv run uvicorn steward.app:create_app --factory
 ```
 
+### Apply database migrations
+
+```bash
+uv run steward-db upgrade
+```
+
+To point migrations at a specific config file:
+
+```bash
+STEWARD_CONFIG=config.example.yml uv run steward-db upgrade
+```
+
 ### Run tests
 
 ```bash

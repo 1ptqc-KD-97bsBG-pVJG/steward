@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+import os
 from collections.abc import Mapping
 from copy import deepcopy
 from pathlib import Path
-import os
 from typing import Any
 
 import yaml
