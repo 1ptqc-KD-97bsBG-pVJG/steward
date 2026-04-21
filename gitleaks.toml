@@ -1,0 +1,22 @@
+title = "Steward gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allowed placeholders and example-only values"
+regexes = [
+  '''REPLACE_ME(?:_WITH_[A-Z_]+)?''',
+  '''example\.ts\.net''',
+  '''stwd\.bad\.secret''',
+  '''sk-anything''',
+]
+paths = [
+  '''(^|/)\.gitignore$''',
+]
+
+[[rules]]
+id = "steward-ts-net-hostname"
+description = "Non-placeholder ts.net hostnames are not allowed in this public repo"
+regex = '''\b[A-Za-z0-9.-]+\.ts\.net\b'''
+tags = ["network", "hostname", "public-repo"]

@@ -66,6 +66,7 @@ async def exercise_repositories(database_url: str) -> None:
         assert user.alias == "Owner"
         assert api_key is not None
         assert api_key.client_id == "openclaw-wsl"
+        assert api_key.key_prefix == "stwd_owner"
         assert job is not None
         assert job.requested_model == "qwen/qwen3-coder-next"
         assert event is not None

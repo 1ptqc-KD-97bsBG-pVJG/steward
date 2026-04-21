@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from typing import Any
 
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from steward.db.models import ApiKey, Job, JobEvent, ServiceState, User
 
@@ -49,6 +51,25 @@ class ApiKeyRepository:
             description=description,
         )
         self.session.add(api_key)
+        await self.session.flush()
+        return api_key
+
+    async def get_active_by_prefix(self, key_prefix: str) -> ApiKey | None:
+        statement = (
+            select(ApiKey)
+            .options(selectinload(ApiKey.user))
+            .where(
+                ApiKey.key_prefix == key_prefix,
+                ApiKey.is_active.is_(True),
+                ApiKey.revoked_at.is_(None),
+            )
+        )
+        result = await self.session.execute(statement)
+        return result.scalar_one_or_none()
+
+    async def revoke(self, api_key: ApiKey) -> ApiKey:
+        api_key.is_active = False
+        api_key.revoked_at = api_key.updated_at
         await self.session.flush()
         return api_key
 
